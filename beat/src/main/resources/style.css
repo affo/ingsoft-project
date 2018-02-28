@@ -1,0 +1,30 @@
+/* The background image is applied to the .root style, which means it is applied to the root node of the Scene instance.
+The style definition consists of the name of the property
+(-fx-background-image) and the value for the property (url(”background.jpg”)). */
+.root {
+   -fx-background-image: url("background.jpg");
+}
+
+#welcome-text {
+   -fx-font-size: 32px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#actiontarget {
+  -fx-fill: FIREBRICK;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+.bottom-right {
+  -fx-alignment: bottom-right;
+}
+
+#grid {
+ -fx-alignment: center;
+ -fx-hgap: 10;
+ -fx-vgap: 10;
+ -fx-padding: 25 25 25 25;
+}

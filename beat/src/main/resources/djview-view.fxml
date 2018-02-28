@@ -1,0 +1,11 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml"
+          fx:controller="it.polimi.beat.fx.FXMLViewController" alignment="center" hgap="10" vgap="10">
+
+    <ProgressBar fx:id="progressBar" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
+    progress="0.0"/>
+    <Label fx:id="bpmOutput" text="Offline" GridPane.columnIndex="0" GridPane.rowIndex="1"
+           GridPane.columnSpan="2" textAlignment="CENTER"/>
+</GridPane>

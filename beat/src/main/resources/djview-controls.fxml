@@ -1,0 +1,32 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml"
+          fx:controller="it.polimi.beat.fx.FXMLController" alignment="center" hgap="10" vgap="10">
+
+    <MenuBar GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+        <Menu text="Controls">
+            <MenuItem fx:id="startItem" text="Start" onAction="#start"/>
+            <MenuItem fx:id="stopItem" text="Stop" onAction="#stop"/>
+            <MenuItem text="Quit" onAction="#quit"/>
+        </Menu>
+    </MenuBar>
+
+    <Label text="Enter BPM:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="bpmText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Button text="Set" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2" textAlignment="CENTER"
+            maxWidth="Infinity" onAction="#setBPM">
+        <GridPane.margin>
+            <Insets top="5" right="5" left="5" bottom="5"/>
+        </GridPane.margin>
+    </Button>
+
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2">
+        <HBox.margin>
+            <Insets top="5" right="5" left="5" bottom="5"/>
+        </HBox.margin>
+        <Button text="incr" maxWidth="Infinity" onAction="#increaseBPM" HBox.hgrow="ALWAYS"/>
+        <Button text="decr" maxWidth="Infinity" onAction="#decreaseBPM" HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+</GridPane>
