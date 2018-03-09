@@ -21,4 +21,6 @@ The source folders for this lesson are:
  + `junit-quickstart` (see README inside);
  + `chat` project.
 
-## Lesson 2 - ?
+## Lesson 2 - Socket programming
+
+The source folder is `socket`. See the [README](socket/README.md) inside.
