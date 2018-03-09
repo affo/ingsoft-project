@@ -52,21 +52,21 @@ public class GroupTest {
         group.join(carl);
         group.join(mark);
 
-        Message m = new Message(john, "hello");
+        Message m = new Message(group, john, "hello");
         group.sendMessage(m);
 
         List<Message> messages = group.messages();
         List<Message> expected = Collections.singletonList(m);
         assertThat(messages, is(expected));
 
-        verify(john).receiveMessage(m, group);
-        verify(carl).receiveMessage(m, group);
-        verify(mark).receiveMessage(m, group);
+        verify(john).receiveMessage(m);
+        verify(carl).receiveMessage(m);
+        verify(mark).receiveMessage(m);
     }
 
     @Test(expected = UserNotInGroupException.class)
     public void testIllegalMessage() throws RemoteException {
-        Message message = new Message(john, "hello");
+        Message message = new Message(group, john, "hello");
         group.sendMessage(message);
     }
 }

@@ -4,7 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by affo on 05/03/18.
@@ -33,15 +34,12 @@ public class UserTest {
         when(group.getName()).thenReturn("mocked-group");
 
         john.listenToMessages(receiver);
-        Message message = new Message(carl, "Hello everybody!");
-        john.receiveMessage(message, group);
+        Message message = new Message(group, carl, "Hello everybody!");
+        john.receiveMessage(message);
 
 
-        StubMessageReceiver.Received received = receiver.get();
+        Message received = receiver.get();
 
-        assertEquals(received.groupName, "mocked-group");
-        assertEquals(received.messageBody, "Hello everybody!");
-
-        verify(group).getName();
+        assertEquals(message, received);
     }
 }

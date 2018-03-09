@@ -1,16 +1,17 @@
 package chat.model;
 
-import chat.exceptions.UserNotInGroupException;
-
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by affo on 27/02/18.
  */
-public class User {
+public class User implements Serializable {
     private String username;
-    private List<MessageReceivedObserver> observers;
+    private transient List<MessageReceivedObserver> observers;
 
     public User(String username) {
         super();
@@ -30,9 +31,9 @@ public class User {
         observers.add(observer);
     }
 
-    public void receiveMessage(Message message, Group group) {
+    public void receiveMessage(Message message) {
         for (MessageReceivedObserver observer : observers) {
-            observer.onMessage(group.getName(), message.getContent());
+            observer.onMessage(message);
         }
     }
 
@@ -49,5 +50,16 @@ public class User {
     @Override
     public int hashCode() {
         return username != null ? username.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "@" + username;
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        // upon deserialization, observers are reset
+        observers = new LinkedList<>();
     }
 }

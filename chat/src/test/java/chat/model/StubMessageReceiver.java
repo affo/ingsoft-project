@@ -7,23 +7,14 @@ import java.util.List;
  * Created by affo on 05/03/18.
  */
 public class StubMessageReceiver implements MessageReceivedObserver {
-    private List<Received> received = new LinkedList<>();
+    private List<Message> received = new LinkedList<>();
 
     @Override
-    public void onMessage(String groupName, String messageBody) {
-        received.add(new Received(groupName, messageBody));
+    public void onMessage(Message message) {
+        received.add(message);
     }
 
-    public Received get() throws IndexOutOfBoundsException {
+    public Message get() throws IndexOutOfBoundsException {
         return received.remove(0);
-    }
-
-    public static class Received {
-        public final String groupName, messageBody;
-
-        private Received(String groupName, String messageBody) {
-            this.groupName = groupName;
-            this.messageBody = messageBody;
-        }
     }
 }
