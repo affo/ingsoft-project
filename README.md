@@ -24,3 +24,7 @@ The source folders for this lesson are:
 ## Lesson 2 - Socket programming
 
 The source folder is `socket`. See the [README](socket/README.md) inside.
+
+## Lesson 3 - Java RMI
+
+The source folder is `rmi`. See the [README](rmi/README.md) inside.
