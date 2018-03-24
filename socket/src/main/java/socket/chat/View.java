@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 public class View implements MessageReceivedObserver, GroupChangeListener {
     private Scanner fromKeyBoard;
+    private boolean firstTimeStarted = true;
     // ----- The view is composed with the controller (strategy)
     private final ClientController controller;
 
@@ -25,6 +26,29 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         System.out.println(">>> " + text);
     }
 
+    public void chooseGroupOption(int choice) {
+        if (choice == 1) {
+            Group group = controller.createGroup();
+            displayText("Welcome to " + group.getName());
+
+            group.observe(this);
+        }
+
+        else if (choice == 2) {
+            Group group = controller.chooseGroup();
+            displayText("Welcome to " + group.getName());
+
+            group.observe(this);
+        }
+    }
+
+    public void createFirstEverGroup() {
+        Group group = controller.createGroup();
+        displayText("Welcome to " + group.getName());
+
+        group.observe(this);
+    }
+
     public void chooseUsernamePhase() {
         User user;
         do {
@@ -39,10 +63,18 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
     }
 
     public void chooseGroupPhase() {
-        Group group = controller.chooseGroup();
-        displayText("Welcome to " + group.getName());
+        if (firstTimeStarted) {
+            createFirstEverGroup();
+            firstTimeStarted = false;
+        } else {
+            int userChoice = 0;
+            do {
+                System.out.println("1 - Create new Group\n2 - Join existing Group");
+                userChoice = Integer.parseInt(userInput());
+            } while (userChoice != 1 || userChoice != 2 || userChoice == 0);
+            chooseGroupOption(userChoice);
+        }
 
-        group.observe(this);
     }
 
     public void messagingPhase() {
