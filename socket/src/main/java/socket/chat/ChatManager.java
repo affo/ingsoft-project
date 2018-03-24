@@ -15,14 +15,8 @@ import java.util.Set;
  */
 public class ChatManager {
     private static ChatManager instance;
-    private final Group defaultGroup;
     private Set<Group> groups = new HashSet<>();
     private Set<User> users = new HashSet<>();
-
-    private ChatManager() {
-        // create one group by default
-        defaultGroup = createGroup();
-    }
 
     public static synchronized ChatManager get() {
         if (instance == null) {
@@ -32,16 +26,21 @@ public class ChatManager {
         return instance;
     }
 
-    public synchronized Group getDefaultGroup() {
-        return defaultGroup;
-    }
-
     public synchronized Set<Group> groups() {
         return new HashSet<>(groups);
     }
 
     public synchronized Set<User> users() {
         return new HashSet<>(users);
+    }
+
+    public synchronized Group getSelectedGroup(String selectedGroupName) {
+        for (Group group : groups()) {
+            if (group.getName().equals(selectedGroupName)) {
+                return group;
+            }
+        }
+        return null;
     }
 
     public synchronized Group createGroup() {

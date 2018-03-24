@@ -7,6 +7,8 @@ import socket.chat.network.Client;
 import socket.chat.network.commands.*;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by affo on 08/03/18.
@@ -27,6 +29,7 @@ public class ClientController implements ResponseHandler {
     // Pieces of the model
     private User currentUser;
     private Group currentGroup;
+    private Set<Group> groups;
 
     public ClientController(Client client) {
         this.client = client;
@@ -44,10 +47,22 @@ public class ClientController implements ResponseHandler {
         return currentUser;
     }
 
-    public Group chooseGroup() {
-        client.request(new ChooseGroupRequest()); // dummy
+    public Group chooseGroup(String selectedGroupName) {
+        client.request(new ChooseGroupRequest(selectedGroupName));
         client.nextResponse().handle(this);
         return currentGroup;
+    }
+
+    public Group createGroup() {
+        client.request(new CreateGroupRequest());
+        client.nextResponse().handle(this);
+        return currentGroup;
+    }
+
+    public Set<Group> getGroups() {
+        client.request(new GetGroupsRequest());
+        client.nextResponse().handle(this);
+        return groups;
     }
 
     public void startMessaging() {
@@ -93,8 +108,19 @@ public class ClientController implements ResponseHandler {
     }
 
     @Override
+    public void handle(GroupCreatedResponse groupCreatedResponse) {
+        currentGroup = groupCreatedResponse.group;
+        ClientContext.get().setCurrentGroup(currentGroup);
+    }
+
+    @Override
     public void handle(UserCreatedResponse userCreatedResponse) {
         currentUser = userCreatedResponse.user;
         ClientContext.get().setCurrentUser(currentUser);
+    }
+
+    @Override
+    public void handle(GetGroupsResponse getGroupsResponse) {
+        groups = getGroupsResponse.groups;
     }
 }

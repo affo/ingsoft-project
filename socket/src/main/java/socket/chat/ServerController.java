@@ -7,6 +7,9 @@ import socket.chat.exceptions.InvalidUsernameException;
 import socket.chat.network.ClientHandler;
 import socket.chat.network.commands.*;
 
+import java.lang.reflect.InaccessibleObjectException;
+import java.util.Set;
+
 /**
  * Created by affo on 09/03/18.
  */
@@ -18,6 +21,7 @@ public class ServerController implements RequestHandler {
     private final ChatManager manager;
     private User user;
     private Group currentGroup;
+    private Set<Group> groups;
 
     public ServerController(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
@@ -54,13 +58,34 @@ public class ServerController implements RequestHandler {
     }
 
     @Override
-    public Response handle(ChooseGroupRequest chooseGroupRequest) {
-        currentGroup = manager.getDefaultGroup();
+    public Response handle(ChooseGroupRequest chooseGroupRequest, String selectedGroupName) {
+        currentGroup = manager.getSelectedGroup(selectedGroupName);
+        if (currentGroup != null) {
+            currentGroup.join(user);
+
+            currentGroup.observe(clientHandler);
+
+            System.out.println(">>> Group " + currentGroup.getName() + " updated: " + currentGroup.users());
+            return new JoinGroupResponse(currentGroup);
+        } else {
+            throw new InaccessibleObjectException();
+        }
+    }
+
+    @Override
+    public Response handle(CreateGroupRequest createGroupRequest) {
+        currentGroup = manager.createGroup();
         currentGroup.join(user);
 
         currentGroup.observe(clientHandler);
 
         System.out.println(">>> Group " + currentGroup.getName() + " updated: " + currentGroup.users());
-        return new JoinGroupResponse(currentGroup);
+        return new GroupCreatedResponse(currentGroup);
+    }
+
+    @Override
+    public Response handle(GetGroupsRequest getGroupsRequest) {
+        groups = manager.groups();
+        return new GetGroupsResponse(groups);
     }
 }
