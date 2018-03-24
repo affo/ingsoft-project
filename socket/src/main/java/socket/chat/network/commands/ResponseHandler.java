@@ -11,4 +11,6 @@ public interface ResponseHandler {
     void handle(JoinGroupResponse joinGroupResponse);
 
     void handle(UserCreatedResponse userCreatedResponse);
+
+    void handle(GroupCreatedResponse groupCreatedResponse);
 }
