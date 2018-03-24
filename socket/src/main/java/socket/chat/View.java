@@ -65,8 +65,7 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
     }
 
     public boolean isValidUserChoice(int userChoice) {
-        if (userChoice != 1 && userChoice != 2) return false;
-        return true;
+        return  (userChoice != 1 && userChoice != 2) ? false : true;
     }
 
     public void createFirstEverGroup() {
@@ -90,20 +89,22 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         user.listenToMessages(this);
     }
 
-    public void chooseGroupPhase() throws IllegalArgumentException {
+    public void chooseGroupPhase() {
         int userChoice;
         if (isGroupsEmpty()) {
             displayText("First group will be created");
             createFirstEverGroup();
         } else {
-            // lazy String formatting
-            System.out.print("1 - Create new Group\n2 - Join existent group: ");
-            displayGroups();
-            userChoice = Integer.parseInt(userInput());
-            if (!isValidUserChoice(userChoice)) {
-                throw new IllegalArgumentException();
-            }
-            chooseGroupOption(userChoice);
+            do {
+                System.out.print("1 - Create new Group\n2 - Join existent group: ");
+                displayGroups();
+                userChoice = Integer.parseInt(userInput());
+                if (!isValidUserChoice(userChoice)) {
+                    System.err.println("Invalid choice");
+                    continue;
+                }
+                chooseGroupOption(userChoice);
+            } while (!isValidUserChoice(userChoice));
         }
     }
 

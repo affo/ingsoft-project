@@ -7,7 +7,6 @@ import socket.chat.network.Client;
 import socket.chat.network.commands.*;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -87,15 +86,12 @@ public class ClientController implements ResponseHandler {
     }
 
     public void run() throws IOException {
-        try {
-            view.chooseUsernamePhase();
-            view.chooseGroupPhase();
-            view.messagingPhase();
+        view.chooseUsernamePhase();
+        view.chooseGroupPhase();
+        view.messagingPhase();
 
-            receiver.interrupt();
-        } catch (IllegalArgumentException e) {
-            System.err.println("Invalid choice");
-        }
+        receiver.interrupt();
+
     }
 
     // -------------------------- Response handling
