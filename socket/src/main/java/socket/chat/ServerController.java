@@ -38,6 +38,7 @@ public class ServerController implements RequestHandler {
             currentGroup.sendMessage(message);
         } else {
             currentGroup.leave(user);
+            manager.removeUser(user);
             clientHandler.stop();
             System.out.println("<<< Group " + currentGroup.getName() + " updated: " + currentGroup.users());
         }

@@ -50,6 +50,11 @@ public class ChatManager {
         return group;
     }
 
+    public synchronized void removeUser(User user) {
+        if (users.contains(user))
+            users.remove(user);
+    }
+
     public synchronized User createUser(String name) throws InvalidUsernameException {
         User user = new User(name);
 
