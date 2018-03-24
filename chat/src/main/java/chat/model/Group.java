@@ -44,7 +44,8 @@ public class Group implements Serializable {
         messages.add(message);
 
         for (User user : users) {
-            user.receiveMessage(message);
+            if (!user.getUsername().equals(message.getSender().getUsername()))
+                user.receiveMessage(message);
         }
     }
 
