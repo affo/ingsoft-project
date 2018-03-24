@@ -3,6 +3,7 @@ package socket.chat;
 import chat.model.Group;
 import chat.model.User;
 import socket.chat.exceptions.InvalidUsernameException;
+import socket.chat.exceptions.NonExistentGroupException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,13 +35,13 @@ public class ChatManager {
         return new HashSet<>(users);
     }
 
-    public synchronized Group getSelectedGroup(String selectedGroupName) {
+    public synchronized Group getSelectedGroup(String selectedGroupName) throws NonExistentGroupException {
         for (Group group : groups()) {
             if (group.getName().equals(selectedGroupName)) {
                 return group;
             }
         }
-        return null;
+        throw new NonExistentGroupException("Group hasn't been created yet");
     }
 
     public synchronized Group createGroup() {

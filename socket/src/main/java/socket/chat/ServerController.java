@@ -4,6 +4,7 @@ import chat.model.Group;
 import chat.model.Message;
 import chat.model.User;
 import socket.chat.exceptions.InvalidUsernameException;
+import socket.chat.exceptions.NonExistentGroupException;
 import socket.chat.network.ClientHandler;
 import socket.chat.network.commands.*;
 
@@ -58,8 +59,12 @@ public class ServerController implements RequestHandler {
     }
 
     @Override
-    public Response handle(ChooseGroupRequest chooseGroupRequest, String selectedGroupName) {
-        currentGroup = manager.getSelectedGroup(selectedGroupName);
+    public Response handle(ChooseGroupRequest chooseGroupRequest) {
+        try {
+            currentGroup = manager.getSelectedGroup(chooseGroupRequest.selectedGroupName);
+        } catch (NonExistentGroupException e) {
+            return new TextResponse("ERROR: " + e.getMessage(), StatusCode.KO);
+        }
         if (currentGroup != null) {
             currentGroup.join(user);
 

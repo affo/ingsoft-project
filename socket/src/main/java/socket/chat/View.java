@@ -52,9 +52,12 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         }
 
         else if (choice == 2) {
-            System.out.println("Write name of the group you'd like to join:");
-            String selectedGroupName = userInput();
-            Group group = controller.chooseGroup(selectedGroupName);
+            Group group;
+            do {
+                System.out.println("Write name of the group you'd like to join:");
+                String selectedGroupName = userInput();
+                group = controller.chooseGroup(selectedGroupName);
+            } while (group == null);
             displayText("Welcome to " + group.getName());
 
             group.observe(this);
