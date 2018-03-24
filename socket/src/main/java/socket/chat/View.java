@@ -46,7 +46,7 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
     public void chooseGroupOption(int choice) {
         if (choice == 1) {
             Group group = controller.createGroup();
-            displayText("Welcome to " + group.getName());
+            displayText("Welcome to " + group.getName() + "\nWrite :q to quit the group\n");
 
             group.observe(this);
         }
@@ -54,11 +54,11 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         else if (choice == 2) {
             Group group;
             do {
-                System.out.println("Write name of the group you'd like to join:");
+                System.out.print("Write name of the group you'd like to join: ");
                 String selectedGroupName = userInput();
                 group = controller.chooseGroup(selectedGroupName);
             } while (group == null);
-            displayText("Welcome to " + group.getName());
+            displayText("Welcome to " + group.getName() + "\nWrite :q to quit the group\n");
 
             group.observe(this);
         }
@@ -66,7 +66,7 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
 
     public void createFirstEverGroup() {
         Group group = controller.createGroup();
-        displayText("Welcome to " + group.getName());
+        displayText("Welcome to " + group.getName() + "\nWrite :q to quit the group\n");
 
         group.observe(this);
     }
