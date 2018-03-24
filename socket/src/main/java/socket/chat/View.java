@@ -9,7 +9,6 @@ import java.util.Scanner;
  */
 public class View implements MessageReceivedObserver, GroupChangeListener {
     private Scanner fromKeyBoard;
-    private boolean firstTimeStarted = true;
     // ----- The view is composed with the controller (strategy)
     private final ClientController controller;
 
@@ -26,6 +25,24 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         System.out.println(">>> " + text);
     }
 
+    public void displayGroups() {
+        int commaController = 1;
+        System.out.print("[");
+        for (Group group : controller.getGroups()) {
+            System.out.print(group.getName());
+            if (commaController < controller.getGroups().size()) {
+                System.out.print(",");
+                commaController++;
+            }
+
+        }
+        System.out.println("]");
+    }
+
+    public boolean isGroupsEmpty() {
+        return controller.getGroups().isEmpty();
+    }
+
     public void chooseGroupOption(int choice) {
         if (choice == 1) {
             Group group = controller.createGroup();
@@ -35,7 +52,9 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         }
 
         else if (choice == 2) {
-            Group group = controller.chooseGroup();
+            System.out.println("Write name of the group you'd like to join:");
+            String selectedGroupName = userInput();
+            Group group = controller.chooseGroup(selectedGroupName);
             displayText("Welcome to " + group.getName());
 
             group.observe(this);
@@ -63,15 +82,19 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
     }
 
     public void chooseGroupPhase() {
-        if (firstTimeStarted) {
+        int userChoice = -1;
+        if (isGroupsEmpty()) {
+            System.out.println("First group will be created");
             createFirstEverGroup();
-            firstTimeStarted = false;
         } else {
-            int userChoice = 0;
-            do {
-                System.out.println("1 - Create new Group\n2 - Join existing Group");
-                userChoice = Integer.parseInt(userInput());
-            } while (userChoice != 1 || userChoice != 2 || userChoice == 0);
+            // lazy String formatting
+            System.out.print("1 - Create new Group\n2 - Join existent group: ");
+            displayGroups();
+            userChoice = Integer.parseInt(userInput());
+            if (userChoice != 1 && userChoice != 2) {
+                System.err.println("Incorrect input, re-run to complete process");
+                return;
+            }
             chooseGroupOption(userChoice);
         }
 
