@@ -10,7 +10,7 @@ public interface RequestHandler {
 
     Response handle(CreateUserRequest request);
 
-    Response handle(ChooseGroupRequest chooseGroupRequest, String selectedGroupName);
+    Response handle(ChooseGroupRequest chooseGroupRequest);
 
     Response handle(CreateGroupRequest createGroupRequest);
 
