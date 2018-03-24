@@ -46,27 +46,33 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
     public void chooseGroupOption(int choice) {
         if (choice == 1) {
             Group group = controller.createGroup();
-            displayText("Welcome to " + group.getName() + "\nWrite :q to quit the group\n");
+            displayText("Welcome to " + group.getName());
+            displayText("Write :q to quit the group\n");
 
             group.observe(this);
-        }
-
-        else if (choice == 2) {
+        } else if (choice == 2) {
             Group group;
             do {
                 System.out.print("Write name of the group you'd like to join: ");
                 String selectedGroupName = userInput();
                 group = controller.chooseGroup(selectedGroupName);
             } while (group == null);
-            displayText("Welcome to " + group.getName() + "\nWrite :q to quit the group\n");
+            displayText("Welcome to " + group.getName());
+            displayText("Write :q to quit the group\n");
 
             group.observe(this);
         }
     }
 
+    public boolean isValidUserChoice(int userChoice) {
+        if (userChoice != 1 && userChoice != 2) return false;
+        return true;
+    }
+
     public void createFirstEverGroup() {
         Group group = controller.createGroup();
-        displayText("Welcome to " + group.getName() + "\nWrite :q to quit the group\n");
+        displayText("Welcome to " + group.getName());
+        displayText("Write :q to quit the group\n");
 
         group.observe(this);
     }
@@ -84,23 +90,21 @@ public class View implements MessageReceivedObserver, GroupChangeListener {
         user.listenToMessages(this);
     }
 
-    public void chooseGroupPhase() {
-        int userChoice = -1;
+    public void chooseGroupPhase() throws IllegalArgumentException {
+        int userChoice;
         if (isGroupsEmpty()) {
-            System.out.println("First group will be created");
+            displayText("First group will be created");
             createFirstEverGroup();
         } else {
             // lazy String formatting
             System.out.print("1 - Create new Group\n2 - Join existent group: ");
             displayGroups();
             userChoice = Integer.parseInt(userInput());
-            if (userChoice != 1 && userChoice != 2) {
-                System.err.println("Incorrect input, re-run to complete process");
-                return;
+            if (!isValidUserChoice(userChoice)) {
+                throw new IllegalArgumentException();
             }
             chooseGroupOption(userChoice);
         }
-
     }
 
     public void messagingPhase() {

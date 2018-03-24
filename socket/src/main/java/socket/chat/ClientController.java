@@ -87,11 +87,15 @@ public class ClientController implements ResponseHandler {
     }
 
     public void run() throws IOException {
-        view.chooseUsernamePhase();
-        view.chooseGroupPhase();
-        view.messagingPhase();
+        try {
+            view.chooseUsernamePhase();
+            view.chooseGroupPhase();
+            view.messagingPhase();
 
-        receiver.interrupt();
+            receiver.interrupt();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid choice");
+        }
     }
 
     // -------------------------- Response handling
