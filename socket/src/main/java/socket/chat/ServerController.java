@@ -22,7 +22,6 @@ public class ServerController implements RequestHandler {
     private final ChatManager manager;
     private User user;
     private Group currentGroup;
-    private Set<Group> groups;
 
     public ServerController(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
@@ -91,7 +90,7 @@ public class ServerController implements RequestHandler {
 
     @Override
     public Response handle(GetGroupsRequest getGroupsRequest) {
-        groups = manager.groups();
+        Set<Group> groups = manager.groups();
         return new GetGroupsResponse(groups);
     }
 }

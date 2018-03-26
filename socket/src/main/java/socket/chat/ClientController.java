@@ -6,7 +6,6 @@ import chat.model.User;
 import socket.chat.network.Client;
 import socket.chat.network.commands.*;
 
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -85,7 +84,7 @@ public class ClientController implements ResponseHandler {
                 new SendMessageRequest(new Message(currentGroup, currentUser, content)));
     }
 
-    public void run() throws IOException {
+    public void run() {
         view.chooseUsernamePhase();
         view.chooseGroupPhase();
         view.messagingPhase();
