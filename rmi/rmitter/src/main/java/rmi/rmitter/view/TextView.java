@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Created by affo on 19/03/18.
  */
 public class TextView extends UnicastRemoteObject
-        implements RemoteTextView, UserObserver, FeedObserver {
+        implements RemoteBaseView, UserObserver, FeedObserver {
     public static final String COMMAND_PREFIX = ":";
     public static final String POST_COMMAND = COMMAND_PREFIX + "post";
     public static final String FOLLOW_USER_COMMAND = COMMAND_PREFIX + "fuser";
@@ -58,6 +58,10 @@ public class TextView extends UnicastRemoteObject
             username = in.nextLine();
             if (!username.isEmpty()) {
                 token = controller.login(username, this);
+                System.out.println(">>> This is your token:");
+                System.out.println(token);
+                System.out.println(">>> Use it with other clients");
+                System.out.println();
             }
         } while (username.isEmpty());
 

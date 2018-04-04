@@ -1,7 +1,7 @@
 package rmi.rmitter.control;
 
 import rmi.rmitter.model.*;
-import rmi.rmitter.view.RemoteTextView;
+import rmi.rmitter.view.RemoteBaseView;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -17,7 +17,7 @@ public interface RemoteController extends Remote {
 
     void followUser(String token, String username) throws RemoteException;
 
-    String login(String username, RemoteTextView view) throws RemoteException;
+    String login(String username, RemoteBaseView view) throws RemoteException;
 
     void observeUser(String token, String username,
                      UserObserver userObserver, FeedObserver feedObserver) throws RemoteException;
