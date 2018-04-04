@@ -1,0 +1,21 @@
+/* The background image is applied to the .root style, which means it is applied to the root node of the Scene instance.
+The style definition consists of the name of the property
+(-fx-background-image) and the value for the property (url(”background.jpg”)). */
+.root {
+   -fx-background-image: url("background.jpg");
+}
+
+#title {
+   -fx-font-size: 20px;
+   -fx-font-family: "Tahoma";
+}
+
+.center {
+  -fx-alignment: center;
+}
+
+#grid {
+ -fx-hgap: 10;
+ -fx-vgap: 10;
+ -fx-padding: 10 10 10 10;
+}
