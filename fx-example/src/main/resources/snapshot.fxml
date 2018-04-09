@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="fxmlexample.SnapshotClientSideController"
+      prefHeight="100.0" spacing="10" alignment="CENTER">
+
+    <Text fx:id="label" />
+
+    <Text fx:id="state" styleClass="green" />
+
+    <TextField fx:id="input" onAction="#saveState" />
+
+</VBox>

@@ -1,7 +1,7 @@
 package rmi.rmitter.control;
 
 import rmi.rmitter.model.*;
-import rmi.rmitter.view.RemoteTextView;
+import rmi.rmitter.view.RemoteBaseView;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by affo on 19/03/18.
  */
 public class Controller extends UnicastRemoteObject implements RemoteController {
-    private final Map<String, RemoteTextView> views = new HashMap<>();
+    private final Map<String, RemoteBaseView> views = new HashMap<>();
 
     // model
     private transient final Database database;
@@ -49,7 +49,7 @@ public class Controller extends UnicastRemoteObject implements RemoteController 
     }
 
     @Override
-    public synchronized String login(String username, RemoteTextView view) throws RemoteException {
+    public synchronized String login(String username, RemoteBaseView view) throws RemoteException {
         String token = database.login(username);
         views.put(token, view);
         view.ack("Logging in as @" + username);
@@ -62,12 +62,11 @@ public class Controller extends UnicastRemoteObject implements RemoteController 
                                          UserObserver userObserver, FeedObserver feedObserver) throws RemoteException {
         User loggedUser = getLoggedUser(token);
         if (!loggedUser.getUsername().equals(username)) {
-            throw new RemoteException("Not authorized to observer " + username);
+            throw new RemoteException("Not authorized to observe " + username);
         }
 
         loggedUser.observeUser(userObserver);
         loggedUser.observePosts(feedObserver);
-
     }
 
     @Override

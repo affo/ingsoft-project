@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          id="grid"
+          fx:controller="gui.FXMLGui">
+    <HBox styleClass="center"
+          GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">
+        <Text id="title" text="Welcome"/>
+    </HBox>
+
+    <TextField fx:id="username" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="token" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <HBox styleClass="center" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <Button fx:id="login" text="Login" onAction="#loginPressed"/>
+    </HBox>
+
+    <ScrollPane GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3">
+        <TextArea fx:id="feed" wrapText="true" editable="false"/>
+    </ScrollPane>
+
+    <TextField fx:id="post"
+               onAction="#enterPressed"
+               GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
+
+    <stylesheets>
+        <URL value="@style.css"/>
+    </stylesheets>
+
+</GridPane>

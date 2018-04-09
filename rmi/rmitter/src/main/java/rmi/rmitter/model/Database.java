@@ -30,7 +30,7 @@ public class Database {
     private final Map<String, User> usersByToken = new HashMap<>();
     private final Map<String, Hashtag> hashtags = new HashMap<>();
 
-    public User getLoggedUser(String token) throws IllegalArgumentException {
+    public synchronized User getLoggedUser(String token) throws IllegalArgumentException {
         User logged = usersByToken.get(token);
         if (logged == null) {
             throw new IllegalArgumentException("Forbidden, invalid token");
@@ -39,15 +39,15 @@ public class Database {
         return logged;
     }
 
-    public User getUser(String username) {
+    public synchronized User getUser(String username) {
         return usersByName.get(username);
     }
 
-    public Hashtag getOrCreateHashtag(String ht) {
+    public synchronized Hashtag getOrCreateHashtag(String ht) {
         return hashtags.computeIfAbsent(ht, Hashtag::new);
     }
 
-    public String login(String username) throws RemoteException {
+    public synchronized String login(String username) throws RemoteException {
         if (usersByToken.values().stream().map(User::getUsername).anyMatch(u -> u.equals(username))) {
             throw new RemoteException("The user is already logged: " + username);
         }
@@ -64,9 +64,7 @@ public class Database {
         return token;
     }
 
-    public void logout(String token) {
+    public synchronized void logout(String token) {
         usersByToken.remove(token);
     }
-
-
 }

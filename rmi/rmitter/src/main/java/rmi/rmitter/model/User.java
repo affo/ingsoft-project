@@ -17,7 +17,7 @@ public class User implements Serializable {
     private transient final List<FeedObserver> feedObservers;
 
 
-    public User(String username) throws RemoteException {
+    public User(String username) {
         super();
         this.username = username;
         this.followers = new LinkedList<>();
@@ -26,11 +26,11 @@ public class User implements Serializable {
         this.feedObservers = new LinkedList<>();
     }
 
-    public void observeUser(UserObserver observer) throws RemoteException {
+    public void observeUser(UserObserver observer) {
         userObservers.add(observer);
     }
 
-    public void observePosts(FeedObserver observer) throws RemoteException {
+    public void observePosts(FeedObserver observer) {
         feedObservers.add(observer);
     }
 
@@ -38,11 +38,11 @@ public class User implements Serializable {
         return username;
     }
 
-    public int getPostCount() throws RemoteException {
+    public int getPostCount() {
         return numberOfPosts;
     }
 
-    public int getNumberOfFollowers() throws RemoteException {
+    public int getNumberOfFollowers() {
         return followers.size();
     }
 
