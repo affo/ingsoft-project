@@ -21,6 +21,7 @@ public class Client {
 
         // gets a reference for the remote controller
         RemoteController controller = (RemoteController) registry.lookup("controller");
+        //Per avere l'istanza di chi implementa i metodi
 
         // creates and launches the view
         new TextView(controller).run();

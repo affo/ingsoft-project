@@ -28,10 +28,10 @@ public class ClientHandler implements Runnable, MessageReceivedObserver, GroupCh
 
     private final ServerController controller;
 
-    public ClientHandler(Socket s) throws IOException {
-        this.socket = s;
-        this.out = new ObjectOutputStream(s.getOutputStream());
-        this.in = new ObjectInputStream(s.getInputStream());
+    public ClientHandler(Socket socket) throws IOException {
+        this.socket = socket;
+        this.out = new ObjectOutputStream(socket.getOutputStream());
+        this.in = new ObjectInputStream(socket.getInputStream());
 
         this.controller = new ServerController(this);
     }

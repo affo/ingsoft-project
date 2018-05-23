@@ -35,7 +35,6 @@ public class ClientController implements ResponseHandler {
     }
 
     /**
-     *
      * @param username
      * @return the created user or null in case of failure
      */

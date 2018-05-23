@@ -8,7 +8,6 @@ import socket.chat.exceptions.NonExistentGroupException;
 import socket.chat.network.ClientHandler;
 import socket.chat.network.commands.*;
 
-import java.lang.reflect.InaccessibleObjectException;
 import java.util.Set;
 
 /**
@@ -72,9 +71,8 @@ public class ServerController implements RequestHandler {
 
             System.out.println(">>> Group " + currentGroup.getName() + " updated: " + currentGroup.users());
             return new JoinGroupResponse(currentGroup);
-        } else {
-            throw new InaccessibleObjectException();
         }
+        return null;
     }
 
     @Override
